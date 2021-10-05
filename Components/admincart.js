@@ -46,7 +46,7 @@ let sum =0,i=0
         <Image source={toOrders} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.proceedBtnStyle} title='Proceed'>
+      <TouchableOpacity style={styles.proceedBtnStyle} title='Proceed' onPress={() => navigation.navigate("FeedBack")}>
       <Image source={proceed} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       <Text style={styles.totalText}>Total:</Text>

@@ -25,13 +25,13 @@ export default function Cart({ navigation }) {
       <TouchableOpacity style={styles.backToCartStyle}>
         <Image source={backToCart} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.blueOrder} title='BlueOrder' onPress={() => navigation.navigate("")}>
+      <TouchableOpacity style={styles.blueOrder} title='BlueOrder' onPress={() => navigation.navigate("admincart")}>
         <Text style={{color: "white"}}>Order No. 001</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.redOrder} title='RedOrder' onPress={() => navigation.navigate("")}>
+      <TouchableOpacity style={styles.redOrder} title='RedOrder' onPress={() => navigation.navigate("admincart")}>
         <Text style={{color: "white"}}>Order No. 002</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.greenOrder} title='GreenOrder' onPress={() => navigation.navigate("")}>
+      <TouchableOpacity style={styles.greenOrder} title='GreenOrder' onPress={() => navigation.navigate("admincart")}>
         <Text style={{color: "white"}}>Order No. 003</Text>
       </TouchableOpacity>
     </View>
