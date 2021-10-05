@@ -5,6 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import adminOrderScreen from './Components/adminOrderScreen';
 import AdminLogin from './Components/Auth//AdminLogin';
 import AdminRegister from './Components/Auth//AdminRegister';
+import AdminCartScreen from './Components/admincart';
+
 
 
 const Stack = createStackNavigator();
@@ -18,6 +20,7 @@ export default function App() {
         <Stack.Screen name='Admin Login' component={AdminLogin} options={{ headerShown: false }} />
         <Stack.Screen name='Admin Register' component={AdminRegister} options={{ headerShown: false }} />
         <Stack.Screen name='adminOrderScreen' component={adminOrderScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='admincart' component={AdminCartScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
