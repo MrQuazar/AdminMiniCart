@@ -18,26 +18,46 @@ const itemsList = [];
 
 export default function Cart({ navigation ,route }) {
 
+  // const [orderNo, setorderNo] = React.useState(route.params ? route.params : null);
+  const [orderNo, setorderNo] = React.useState(3);
+  const [QRarray, setQRarray] = React.useState([]);
   const [itemsArray, setItemsArray] = React.useState([]);
+  const [newItemsArray, setNewItemsArray] = React.useState([]);
   const [flag, setFlag] = React.useState(0);
-  useEffect(() => {
-    fire.database().ref('Items').on('value', snapshot => {
-      let data = snapshot.val();
-      const items = Object.values(data);
-      setItemsArray(items);
-    });
-}, []);
+  React.useEffect(() => {
+      fire.database().ref('Orders').orderByChild("OrderNo").equalTo(orderNo).on('value', snapshot => {
+        let data = snapshot.val();
+        const items = Object.values(data);
+        itemsArray.push(items[0]);
+        console.log(itemsArray[0].QRArray);
+        QRarray.push(itemsArray[0].QRArray);
+        console.log(QRarray[0]);
+      });
+      for (let i = 0; i < QRarray.length; i++) {
+        console.log(QRarray[i].Code);
+        fire.database().ref('Items').orderByChild("ItemId").equalTo(QRarray[i].Code).on('value', snapshot => {
+          let data = snapshot.val();
+          const items = Object.values(data);
+          newItemsArray.push(items[0]);
+        });
+    }
+  }, []);
+  console.log(itemsArray);
+  console.log(itemsArray[0]);
 
-  const [totalCost,setTotalCost] = useState(0)
-  const totalItems = itemsArray.length;
+  
+  
+    const [totalCost,setTotalCost] = useState(0)
+    const totalItems = newItemsArray.length;
+  
+  let sum =0,i=0
+    for(let item of newItemsArray){
+      sum += item.Price * QRarray[i].Quant 
+      i++
+    }
+  
 
-let sum =0,i=0
-  for(let item of itemsArray){
-    sum += item.Price * itemsArray[i].Quant 
-    i++
-  }
-
-  if(!itemsArray){return(<Text>The page is loading</Text>)}
+  if(!newItemsArray){return(<Text>The page is loading</Text>)}
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>
@@ -55,7 +75,7 @@ let sum =0,i=0
       </View>
 
       <ScrollView contentContainerStyle= {{justifyContent:'space-around'}} style={{flexGrow: 0.1, "width": 414/414 * windowWidth, "height": 600/896 * windowHeight, "left": -10/414 * windowWidth, "top":120/896 * windowHeight}}>
-        {itemsArray.map((item, index) => {
+        {newItemsArray.map((item, index) => {
           return (
             <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
 
