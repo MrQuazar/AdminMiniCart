@@ -42,7 +42,7 @@ let sum =0,i=0
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>
       <View style={{flex:0.5}}>
-      <TouchableOpacity style={styles.toOrdersStyle} >
+      <TouchableOpacity style={styles.toOrdersStyle} onPress={() => navigation.navigate("adminOrderScreen")} >
         <Image source={toOrders} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       
