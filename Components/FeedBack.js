@@ -6,22 +6,22 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('screen').height;
 
 
-export default function FeedBack(){
+export default function FeedBack({navigation}){
 
     return(
         <View style={{flex: 1}}>
             <ImageBackground source={require('../assets/background.png')} style={styles.bgimage}>
-                <TouchableOpacity style={styles.backarrow} >
+                <TouchableOpacity style={styles.backarrow} onPress={() => navigation.navigate("admincart")}>
                     <Image source={require('../assets/backarrow.png')} style={{resizeMode:'contain', width: '100%', height: '100%'}} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.paymentbtn} >
+                <TouchableOpacity style={styles.paymentbtn} onPress={() => navigation.navigate("adminOrderScreen")}>
                     <Image source={require('../assets/Paymentbtn.png')} style={{resizeMode: 'contain', width: '100%', height: '100%'}} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.orderaccept}>
+                <TouchableOpacity style={styles.orderaccept} onPress={() => navigation.navigate("adminOrderScreen")}>
                     <Image source={require('../assets/OrderAcceptbtn.png')} style={{resizeMode: 'contain', width: '100%', height: '100%'}} />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.cancelbtn}>
-                    <Image source={require('../assets/cancelbtn.png')} style={{resizeMode: 'contain', width: '100%', height: '100%'}} />
+                <TouchableOpacity style={styles.cancelbtn} onPress={() => navigation.navigate("adminOrderScreen")}>
+                    <Image source={require('../assets/cancelbtn.png')} style={{resizeMode: 'contain', width: '100%', height: '100%'}}  />
                 </TouchableOpacity>
 
 

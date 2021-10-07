@@ -24,41 +24,34 @@ export default function Cart({ navigation ,route }) {
   const [itemsArray, setItemsArray] = React.useState([]);
   const [newItemsArray, setNewItemsArray] = React.useState([]);
   const [flag, setFlag] = React.useState(0);
+  
   React.useEffect(() => {
       fire.database().ref('Orders').orderByChild("OrderNo").equalTo(orderNo).on('value', snapshot => {
-        let data = snapshot.val();
-        const items = Object.values(data);
+        let database = snapshot.val();
+        const items = Object.values(database);
         itemsArray.push(items[0]);
-        console.log(itemsArray[0].QRArray);
         QRarray.push(itemsArray[0].QRArray);
-        console.log(QRarray[0]);
+        const qrs = QRarray[0];
+        for (let i = 0; i < qrs.length; i++) {
+          console.log(qrs[i].Code);
+          fire.database().ref('Items').orderByChild("ItemId").equalTo(qrs[i].Code).on('value', snapshot => {
+            let data = snapshot.val();
+            const items = Object.values(data);
+            newItemsArray.push(items[0]);
+            setFlag(2);
+          });
+      }
       });
-      for (let i = 0; i < QRarray.length; i++) {
-        console.log(QRarray[i].Code);
-        fire.database().ref('Items').orderByChild("ItemId").equalTo(QRarray[i].Code).on('value', snapshot => {
-          let data = snapshot.val();
-          const items = Object.values(data);
-          newItemsArray.push(items[0]);
-        });
-    }
-  }, []);
-  console.log(itemsArray);
-  console.log(itemsArray[0]);
-
-  
-  
+    }, []);
+    console.log(newItemsArray);
     const [totalCost,setTotalCost] = useState(0)
     const totalItems = newItemsArray.length;
-  
   let sum =0,i=0
     for(let item of newItemsArray){
-      sum += item.Price * QRarray[i].Quant 
+      sum += item.Price * newItemsArray[i].Quant;
       i++
     }
-  
-
-  if(!newItemsArray){return(<Text>The page is loading</Text>)}
-  return (
+   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>
       <View style={{flex:0.5}}>
@@ -66,7 +59,8 @@ export default function Cart({ navigation ,route }) {
         <Image source={toOrders} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       
-      <TouchableOpacity style={styles.proceedBtnStyle} title='Proceed' onPress={() => navigation.navigate("FeedBack")}>
+      <TouchableOpacity style={styles.proceedBtnStyle} title='Proceed' onPress={() => 
+        navigation.navigate("FeedBack")}>
       <Image source={proceed} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       <Text style={styles.totalText}>Total:</Text>
@@ -75,6 +69,7 @@ export default function Cart({ navigation ,route }) {
       </View>
 
       <ScrollView contentContainerStyle= {{justifyContent:'space-around'}} style={{flexGrow: 0.1, "width": 414/414 * windowWidth, "height": 600/896 * windowHeight, "left": -10/414 * windowWidth, "top":120/896 * windowHeight}}>
+        
         {newItemsArray.map((item, index) => {
           return (
             <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
