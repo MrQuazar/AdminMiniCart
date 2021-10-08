@@ -18,8 +18,8 @@ const itemsList = [];
 
 export default function Cart({ navigation ,route }) {
 
-  // const [orderNo, setorderNo] = React.useState(route.params ? route.params : null);
-  const [orderNo, setorderNo] = React.useState(1);
+  const [orderNo, setorderNo] = React.useState(route.params ? route.params : null);
+  console.log(orderNo);
   const [QRarray, setQRarray] = React.useState([]);
   const [itemsArray, setItemsArray] = React.useState([]);
   const [newItemsArray, setNewItemsArray] = React.useState([]);
