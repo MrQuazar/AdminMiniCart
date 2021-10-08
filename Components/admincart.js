@@ -19,11 +19,12 @@ const itemsList = [];
 export default function Cart({ navigation ,route }) {
 
   // const [orderNo, setorderNo] = React.useState(route.params ? route.params : null);
-  const [orderNo, setorderNo] = React.useState(3);
+  const [orderNo, setorderNo] = React.useState(1);
   const [QRarray, setQRarray] = React.useState([]);
   const [itemsArray, setItemsArray] = React.useState([]);
   const [newItemsArray, setNewItemsArray] = React.useState([]);
-  const [flag, setFlag] = React.useState(0);
+  const [flag, setFlag] = React.useState(false);
+  const [loopRunner, setLoopRunner] = React.useState(0);
   
   React.useEffect(() => {
       fire.database().ref('Orders').orderByChild("OrderNo").equalTo(orderNo).on('value', snapshot => {
@@ -38,7 +39,8 @@ export default function Cart({ navigation ,route }) {
             let data = snapshot.val();
             const items = Object.values(data);
             newItemsArray.push(items[0]);
-            setFlag(2);
+            setLoopRunner(i);
+            if(newItemsArray.length===qrs.length) setFlag(true);
           });
       }
       });
@@ -48,10 +50,11 @@ export default function Cart({ navigation ,route }) {
     const totalItems = newItemsArray.length;
   let sum =0,i=0
     for(let item of newItemsArray){
-      sum += item.Price * newItemsArray[i].Quant;
+      sum += item.Price * (QRarray[0])[i].Quant;
       i++
     }
-   return (
+    if(!flag){return(<Text>The page is loading</Text>)}
+  return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>
       <View style={{flex:0.5}}>
@@ -78,8 +81,8 @@ export default function Cart({ navigation ,route }) {
                 <Image source={{uri: item.Image}} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
               </TouchableOpacity>
               <Text style={styles.itemName}>{item.Name}</Text>
-              <Text style={styles.itemPrice}>₹{item.Price * itemsArray[index].Quant}</Text>
-              <Text style={styles.itemQuantity}>{itemsArray[index].Quant}</Text>
+              <Text style={styles.itemPrice}>₹{item.Price * (QRarray[0])[index].Quant}</Text>
+              <Text style={styles.itemQuantity}>{(QRarray[0])[index].Quant}</Text>
             </View>
           );
         })}
