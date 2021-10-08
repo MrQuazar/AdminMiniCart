@@ -1,16 +1,67 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native'
+import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity,ScrollView } from 'react-native'
 
 import backToCart from './../assets/backToCart.png'
 import info from './../assets/info.png'
+
+import fire from './firebase';
+import 'firebase/database' 
 
 import { Dimensions } from 'react-native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+
+
 export default function Cart({ navigation }) {
   const [state, setState] = useState({ productNo: 2, blueOrder: 1, redOrder: 1, greenOrder: 1,})
+  const [redOrders,setRedOrders] = useState([])
+  const [blueOrders,setBlueOrders] = useState([])
+  const [greenOrders,setGreenOrders] = useState([])
+React.useEffect(() => {
+
+  fire.database().ref('Orders')
+  .orderByChild('Status').equalTo('B')
+  .on('value', snapshot => {
+    let data = snapshot.val();
+    console.log(data)
+    if(data){
+    const items = Object.values(data);
+    console.log(items)
+    setBlueOrders(items.slice(0));
+    console.log(blueOrders)
+  }
+  });
+
+fire.database().ref('Orders')
+  .orderByChild('Status').equalTo('R')
+  .on('value', snapshot => {
+    let data = snapshot.val();
+    console.log(data)
+    if(data){
+    const items = Object.values(data);
+    setRedOrders(items.slice(0));
+    }
+});
+
+fire.database().ref('Orders')
+    .orderByChild('Status').equalTo('G')
+    .on('value', snapshot => {
+      let data = snapshot.val();
+      console.log(data)
+      if(data){
+      const items = Object.values(data);
+      setGreenOrders(items.slice(0))
+      }
+    });
+
+},[]);
+  
+  console.log(blueOrders)
+  console.log(redOrders)
+  console.log(greenOrders)
+
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF', justifyContent: 'center' }}>
       <TextInput style={styles.InputStyle1} placeholder='Search here'></TextInput>
@@ -22,18 +73,35 @@ export default function Cart({ navigation }) {
       <Text style={styles.redStyle}>{state.redOrder}</Text>
       <Text style={styles.greenStyle}>{state.greenOrder}</Text>
 
-      <TouchableOpacity style={styles.backToCartStyle}>
+      <TouchableOpacity style={styles.backToCartStyle} onPress={() => {setState({ productNo: 3, blueOrder: 2, redOrder: 1, greenOrder: 1,})}}>
         <Image source={backToCart} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
+      <ScrollView contentContainerStyle= {{justifyContent:'space-around'}} style={{flexGrow: 0.1, "width": 414/414 * windowWidth, "height": 600/896 * windowHeight}}>
+        {blueOrders.map((item, index) => {
+          return (
+            <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
       <TouchableOpacity style={styles.blueOrder} title='BlueOrder' onPress={() => navigation.navigate("admincart")}>
-        <Text style={{color: "white"}}>Order No. 001</Text>
+        <Text style={{color: "white"}}>Order no. {item.OrderNo}</Text>
       </TouchableOpacity>
+            </View>)})
+        }
+        {redOrders.map((item, index) => {
+          return (
+            <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
       <TouchableOpacity style={styles.redOrder} title='RedOrder' onPress={() => navigation.navigate("admincart")}>
-        <Text style={{color: "white"}}>Order No. 002</Text>
+        <Text style={{color: "white"}}>Order no. {item.OrderNo}</Text>
       </TouchableOpacity>
+            </View>)})
+        }
+        {greenOrders.map((item, index) => {
+          return (
+            <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
       <TouchableOpacity style={styles.greenOrder} title='GreenOrder' onPress={() => navigation.navigate("admincart")}>
-        <Text style={{color: "white"}}>Order No. 003</Text>
+        <Text style={{color: "white"}}>Order no. {item.OrderNo}</Text>
       </TouchableOpacity>
+            </View>)})
+        }
+    </ScrollView>
     </View>
   )
 }
