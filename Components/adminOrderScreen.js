@@ -21,11 +21,15 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function Cart({ navigation }) {
+  const [textInputValue, setTextInputValue] = React.useState('');
+  const [value, onChangeText] = React.useState('Useless Placeholder');
+
   const [state, setState] = useState({
     productNo: 2,
     blueOrder: 1,
     redOrder: 1,
     greenOrder: 1,
+    search: ''
   });
   const [orders, setOrders] = useState([]);
   React.useEffect(() => {
@@ -50,10 +54,12 @@ export default function Cart({ navigation }) {
     <View
       style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center" }}
     >
-      <TextInput
-        style={styles.InputStyle1}
-        placeholder="Search here"
-      ></TextInput>
+      <TextInput 
+      style={styles.InputStyle1}  
+      placeholder='Search here'
+      onChangeText={(text) => setTextInputValue(text)}
+      value={textInputValue}>
+      </TextInput>
       <TouchableOpacity style={styles.infoStyle}>
         <Image
           source={info}
@@ -85,6 +91,7 @@ export default function Cart({ navigation }) {
         }}
       >
         {orders.map((item, index) => {
+          if(item.OrderNo.toString().toLowerCase().includes(textInputValue.toString().toLowerCase()) || textInputValue == ""){
           if (item.Status === "R")
             return (
               <View
@@ -155,7 +162,7 @@ export default function Cart({ navigation }) {
                 </TouchableOpacity>
               </View>
             );
-        })}
+        }})}
       </ScrollView>
     </View>
   );
