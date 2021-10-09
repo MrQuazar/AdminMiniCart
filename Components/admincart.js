@@ -30,6 +30,7 @@ export default function Cart({ navigation ,route }) {
       fire.database().ref('Orders').orderByChild("OrderNo").equalTo(orderNo).on('value', snapshot => {
         let database = snapshot.val();
         const items = Object.values(database);
+        console.log(items);
         itemsArray.push(items[0]);
         QRarray.push(itemsArray[0].QRArray);
         const qrs = QRarray[0];
@@ -63,7 +64,7 @@ export default function Cart({ navigation ,route }) {
       </TouchableOpacity>
       
       <TouchableOpacity style={styles.proceedBtnStyle} title='Proceed' onPress={() => 
-        navigation.navigate("FeedBack")}>
+        navigation.navigate("FeedBack",orderNo)}>
       <Image source={proceed} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
       <Text style={styles.totalText}>Total:</Text>
