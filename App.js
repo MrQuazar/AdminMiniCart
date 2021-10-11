@@ -16,7 +16,7 @@ export default function App() {
   return (
     <NavigationContainer>
 
-      <Stack.Navigator initialRouteName='adminOrderScreen'>
+      <Stack.Navigator initialRouteName='FeedBack'>
         <Stack.Screen name='Admin Login' component={AdminLogin} options={{ headerShown: false }} />
         <Stack.Screen name='Admin Register' component={AdminRegister} options={{ headerShown: false }} />
         <Stack.Screen name='adminOrderScreen' component={adminOrderScreen} options={{ headerShown: false }} />
