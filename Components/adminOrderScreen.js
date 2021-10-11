@@ -112,7 +112,7 @@ export default function Cart({ navigation }) {
       >
         {orders.map((item, index) => {
           if(item.OrderNo.toString().toLowerCase().includes(textInputValue.toString().toLowerCase()) || textInputValue == ""){
-          if (item.Status === "D")
+          if (item.Status === "R")
             return (
               <View
                 key={index}
@@ -135,7 +135,7 @@ export default function Cart({ navigation }) {
                 </TouchableOpacity>
               </View>
             );
-          if (item.Status === "D")
+          if (item.Status === "B")
             return (
               <View
                 key={index}
@@ -159,7 +159,7 @@ export default function Cart({ navigation }) {
               </View>
             );
 
-          if (item.Status === "D")
+          if (item.Status === "G")
             return (
               <View
                 key={index}
