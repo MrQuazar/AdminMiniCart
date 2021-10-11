@@ -3,6 +3,9 @@ import { Text, View, StyleSheet, Image, TextInput, TouchableOpacity } from 'reac
 import { LinearGradient } from 'expo-linear-gradient'
 import { Dimensions } from 'react-native';
 
+import fire from "../firebase";
+import "firebase/database";
+import "firebase/auth";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('screen').height;
@@ -11,8 +14,11 @@ const windowHeight = Dimensions.get('screen').height;
 import logo from '../../assets/TheIcon.png'
 
 export default function AdminLogin({ navigation }) {
-  const [UName, setUName] = React.useState();
+  const [Email, setEmail] = React.useState();
   const [PWord, setPWord] = React.useState();
+  if(fire.auth().currentUser){
+    console.log(fire.auth().currentUser)
+  }
   return (
     <View style={{ flex: 1, backgroundcolor: '#e5e5e5', justifyContent: 'center' }}>
       <LinearGradient
@@ -25,12 +31,25 @@ export default function AdminLogin({ navigation }) {
       </View>
       <View style={styles.RectangleShapeView} />
       <Text style={styles.RegText}>Login</Text>
-      <Text style={styles.CreateNewAccTxt}>Enter your Username and Password</Text>
-      <TextInput style={styles.InputStyle1} placeholder='Enter Username'
-      onChangeText={UName => setUName(UName)}></TextInput>
+      <Text style={styles.CreateNewAccTxt}>Enter your Email and Password</Text>
+      <TextInput style={styles.InputStyle1} placeholder='Enter Email'
+      onChangeText={Email => setEmail(Email)}></TextInput>
       <TextInput style={styles.InputStyle2} placeholder='Enter Password'
       onChangeText={PWord => setPWord(PWord)} secureTextEntry={true}></TextInput>
-      <TouchableOpacity style={styles.Button} title='Login' onPress={() => navigation.navigate("adminOrderScreen")}>
+      <TouchableOpacity style={styles.Button} title='Login' onPress={
+        async () => {
+          try {
+            console.log(PWord);
+            await fire.auth().signInWithEmailAndPassword(Email, PWord);
+            console.log(Email);
+            console.log(PWord);
+            navigation.navigate("adminOrderScreen")
+            
+            
+          } catch (error) {
+            alert('Something Went Wrong');
+          }
+        }}>
         <Text style={styles.ButtonText}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.HaveAccTxt}>

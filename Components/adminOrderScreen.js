@@ -14,6 +14,7 @@ import info from "./../assets/info.png";
 
 import fire from "./firebase";
 import "firebase/database";
+import "firebase/auth";
 
 import { Dimensions } from "react-native";
 
@@ -50,6 +51,17 @@ export default function Cart({ navigation }) {
 
   console.log(orders);
 
+  const signOutUser = async () => {
+    try{
+        await fire.auth().signOut()
+        navigation.navigate('Login')
+        
+    }catch(e){
+        console.log('logout')
+        console.log(e)
+    }
+}
+
   return (
     <View
       style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center" }}
@@ -73,13 +85,21 @@ export default function Cart({ navigation }) {
 
       <TouchableOpacity
         style={styles.backToCartStyle}
-        onPress={() => {
-          
-        }}
+        onPress={async () => {
+          try{
+              await fire.auth().signOut()
+              navigation.navigate('Admin Login')
+              
+          }catch(e){
+              console.log('logout')
+              console.log(e)
+          }
+      }}
       >
         <Image
           source={backToCart}
           style={{ resizeMode: "contain", width: "100%", height: "100%" }}
+          
         />
       </TouchableOpacity>
       <ScrollView
@@ -92,7 +112,7 @@ export default function Cart({ navigation }) {
       >
         {orders.map((item, index) => {
           if(item.OrderNo.toString().toLowerCase().includes(textInputValue.toString().toLowerCase()) || textInputValue == ""){
-          if (item.Status === "R")
+          if (item.Status === "D")
             return (
               <View
                 key={index}
@@ -115,7 +135,7 @@ export default function Cart({ navigation }) {
                 </TouchableOpacity>
               </View>
             );
-          if (item.Status === "B")
+          if (item.Status === "D")
             return (
               <View
                 key={index}
@@ -139,7 +159,7 @@ export default function Cart({ navigation }) {
               </View>
             );
 
-          if (item.Status === "G")
+          if (item.Status === "D")
             return (
               <View
                 key={index}
