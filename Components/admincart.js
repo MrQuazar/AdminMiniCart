@@ -17,6 +17,12 @@ const windowHeight = Dimensions.get('window').height;
 const itemsList = [];
 
 export default function Cart({ navigation ,route }) {
+  const [state, setState] = useState({
+    search: '',
+  })
+
+  const [textInputValue, setTextInputValue] = React.useState('');
+  const [value, onChangeText] = React.useState('Useless Placeholder');
 
   const [orderNo, setorderNo] = React.useState(route.params ? route.params : null);
   console.log(orderNo);
@@ -69,12 +75,18 @@ export default function Cart({ navigation ,route }) {
       </TouchableOpacity>
       <Text style={styles.totalText}>Total:</Text>
       <Text style={styles.cartTotal}>₹ {sum}</Text>
-      <TextInput style={styles.InputStyle1} placeholder='Search here'></TextInput>  
+      <TextInput 
+      style={styles.InputStyle1}  
+      placeholder='Search here'
+      onChangeText={(text) => setTextInputValue(text)}
+      value={textInputValue}>
+      </TextInput>  
       </View>
 
       <ScrollView contentContainerStyle= {{justifyContent:'space-around'}} style={{flexGrow: 0.1, "width": 414/414 * windowWidth, "height": 600/896 * windowHeight, "left": -10/414 * windowWidth, "top":120/896 * windowHeight}}>
         
         {newItemsArray.map((item, index) => {
+          if(item.Name.toLowerCase().includes(textInputValue.toLowerCase()) || textInputValue == ""){
           return (
             <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
 
@@ -86,6 +98,7 @@ export default function Cart({ navigation ,route }) {
               <Text style={styles.itemQuantity}>{(QRarray[0])[index].Quant}</Text>
             </View>
           );
+          }
         })}
       </ScrollView>
       </ImageBackground>

@@ -15,10 +15,16 @@ const windowHeight = Dimensions.get('window').height;
 
 
 export default function Cart({ navigation }) {
-  const [state, setState] = useState({ productNo: 2, blueOrder: 1, redOrder: 1, greenOrder: 1,})
+  
+  const [textInputValue, setTextInputValue] = React.useState('');
+  const [value, onChangeText] = React.useState('Useless Placeholder');
+
+  const [state, setState] = useState({ productNo: 2, blueOrder: 1, redOrder: 1, greenOrder: 1,search: ''})
   const [redOrders,setRedOrders] = useState([])
   const [blueOrders,setBlueOrders] = useState([])
   const [greenOrders,setGreenOrders] = useState([])
+
+
 React.useEffect(() => {
 
   fire.database().ref('Orders')
@@ -64,7 +70,12 @@ fire.database().ref('Orders')
 
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF', justifyContent: 'center' }}>
-      <TextInput style={styles.InputStyle1} placeholder='Search here'></TextInput>
+      <TextInput 
+      style={styles.InputStyle1}  
+      placeholder='Search here'
+      onChangeText={(text) => setTextInputValue(text)}
+      value={textInputValue}>
+      </TextInput>
       <TouchableOpacity style={styles.infoStyle}>
         <Image source={info} style={{ resizeMode: 'contain', width: '100%', height: '100%' }} />
       </TouchableOpacity>
@@ -78,12 +89,13 @@ fire.database().ref('Orders')
       </TouchableOpacity>
       <ScrollView contentContainerStyle= {{justifyContent:'space-around'}} style={{flexGrow: 0.1, "width": 414/414 * windowWidth, "height": 600/896 * windowHeight}}>
         {blueOrders.map((item, index) => {
+          if(item.OrderNo.toString().toLowerCase().includes(textInputValue.toString().toLowerCase()) || textInputValue == ""){
           return (
             <View key={index} style={{flex: 1, "width": 414/414 * windowWidth, Height: 1000/896 * windowHeight,"top": -90/896 * windowHeight, marginVertical:60}}>
       <TouchableOpacity style={styles.blueOrder} title='BlueOrder' onPress={() => navigation.navigate("admincart",item.OrderNo)}>
         <Text style={{color: "white"}}>Order no. {item.OrderNo}</Text>
       </TouchableOpacity>
-            </View>)})
+            </View>)}})
         }
         {redOrders.map((item, index) => {
           return (
