@@ -4,6 +4,7 @@ import {
   View,
   StyleSheet,
   Image,
+  ImageBackground,
   TextInput,
   TouchableOpacity,
   ScrollView,
@@ -11,6 +12,7 @@ import {
 
 import backToCart from "./../assets/backToCart.png";
 import info from "./../assets/info.png";
+import backy from './../assets/background.png'
 
 import fire from "./firebase";
 import "firebase/database";
@@ -20,15 +22,18 @@ import { Dimensions } from "react-native";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
+
 export default function Cart({ navigation }) {
   const [textInputValue, setTextInputValue] = React.useState('');
   const [value, onChangeText] = React.useState('Useless Placeholder');
-
+  var BO=0;
+  var RO=0;
+  var GO=0;
   const [state, setState] = useState({
-    productNo: 2,
-    blueOrder: 1,
-    redOrder: 1,
-    greenOrder: 1,
+    productNo: 0,
+    blueOrder:0,
+    greenOrder:0, 
+    redOrder:0,
     search: ''
   });
   const [orders, setOrders] = useState([]);
@@ -42,6 +47,13 @@ export default function Cart({ navigation }) {
         if (data) {
           const items = Object.values(data);
           console.log(items);
+          for(let i=0; i<items.length; i++) {
+          console.log(items[i].Status)
+          if (items[i].Status === "B") (BO=BO+1);
+          if (items[i].Status === "R") (RO=RO+1);
+          if (items[i].Status === "G") (GO=GO+1);
+          setState({blueOrder:BO,redOrder:RO,greenOrder:GO})
+          }
           setOrders(items.slice(0));
           console.log(orders);
         }
@@ -50,10 +62,12 @@ export default function Cart({ navigation }) {
 
   console.log(orders);
 
+
   return (
     <View
       style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center" }}
     >
+         <ImageBackground source={backy} style={styles.image}>
       <TextInput 
       style={styles.InputStyle1}  
       placeholder='Search here'
@@ -61,7 +75,7 @@ export default function Cart({ navigation }) {
       value={textInputValue}>
       </TextInput>
       <TouchableOpacity style={styles.infoStyle}>
-        <Image
+        <ImageBackground
           source={info}
           style={{ resizeMode: "contain", width: "100%", height: "100%" }}
         />
@@ -85,7 +99,9 @@ export default function Cart({ navigation }) {
       <ScrollView
         contentContainerStyle={{ justifyContent: "space-around" }}
         style={{
-          flexGrow: 0.9,
+          flexGrow: 0.75,
+          left: (15 / 414) * windowWidth,
+          top: (210/ 896) * windowHeight,
           width: (414 / 414) * windowWidth,
           height: (600 / 896) * windowHeight,
         }}
@@ -97,11 +113,11 @@ export default function Cart({ navigation }) {
               <View
                 key={index}
                 style={{
-                  flex: 1,
+                  flex: 0.9,
                   width: (414 / 414) * windowWidth,
                   Height: (1000 / 896) * windowHeight,
-                  top: (-90 / 896) * windowHeight,
-                  marginVertical: 60,
+                  top: (0 / 896) * windowHeight,
+                  marginVertical: 50,
                 }}
               >
                 <TouchableOpacity
@@ -123,14 +139,14 @@ export default function Cart({ navigation }) {
                   flex: 1,
                   width: (414 / 414) * windowWidth,
                   Height: (1000 / 896) * windowHeight,
-                  top: (-90 / 896) * windowHeight,
-                  marginVertical: 60,
+                  top: (0 / 896) * windowHeight,
+                  marginVertical: 50,
                 }}
               >
                 <TouchableOpacity
                   style={styles.blueOrder}
                   title="BlueOrder"
-                  onPress={() => navigation.navigate("admincart")}
+                  onPress={() => navigation.navigate("admincart",item.OrderNo)}
                 >
                   <Text style={{ color: "white" }}>
                     Order no. {item.OrderNo}
@@ -147,14 +163,14 @@ export default function Cart({ navigation }) {
                   flex: 1,
                   width: (414 / 414) * windowWidth,
                   Height: (1000 / 896) * windowHeight,
-                  top: (-90 / 896) * windowHeight,
-                  marginVertical: 60,
+                  top: (0 / 896) * windowHeight,
+                  marginVertical: 50,
                 }}
               >
                 <TouchableOpacity
                   style={styles.greenOrder}
                   title="BlueOrder"
-                  onPress={() => navigation.navigate("admincart")}
+                  onPress={() => navigation.navigate("admincart",item.OrderNo)}
                 >
                   <Text style={{ color: "white" }}>
                     Order no. {item.OrderNo}
@@ -164,6 +180,7 @@ export default function Cart({ navigation }) {
             );
         }})}
       </ScrollView>
+      </ImageBackground>
     </View>
   );
 }
@@ -175,7 +192,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-
+  image: {
+    position: "relative",
+    resizeMode:'contain',
+    "width": windowWidth,
+    "height": windowHeight
+  },
   background: {
     position: "relative",
     width: 414,
@@ -198,16 +220,14 @@ const styles = StyleSheet.create({
 
   infoStyle: {
     position: "absolute",
-    width: (369 / 414) * windowWidth,
-    height: (88 / 896) * windowHeight,
-    left: (22 / 414) * windowWidth,
+    width: (380 / 414) * windowWidth,
+    height: (120 / 896) * windowHeight,
+    left: (10 / 414) * windowWidth,
     top: (92 / 896) * windowHeight,
   },
 
   blueStyle: {
     position: "absolute",
-    width: (16 / 414) * windowWidth,
-    height: (17 / 896) * windowHeight,
     right: (50 / 414) * windowWidth,
     top: (98 / 896) * windowHeight,
     fontWeight: "bold",
@@ -215,19 +235,15 @@ const styles = StyleSheet.create({
 
   redStyle: {
     position: "absolute",
-    width: (16 / 414) * windowWidth,
-    height: (17 / 896) * windowHeight,
     right: (50 / 414) * windowWidth,
-    top: (127 / 896) * windowHeight,
+    top: (135 / 896) * windowHeight,
     fontWeight: "bold",
   },
 
   greenStyle: {
     position: "absolute",
-    width: (16 / 414) * windowWidth,
-    height: (17 / 896) * windowHeight,
     right: (50 / 414) * windowWidth,
-    top: (154 / 896) * windowHeight,
+    top: (174 / 896) * windowHeight,
     fontWeight: "bold",
   },
 
