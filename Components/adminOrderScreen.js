@@ -62,7 +62,15 @@ export default function Cart({ navigation }) {
 
   console.log(orders);
 
+/*
 
+      <TouchableOpacity style={styles.infoStyle}>
+        <ImageBackground
+          source={info}
+          style={{ resizeMode: "contain", width: "100%", height: "100%" }}
+        />
+      </TouchableOpacity>
+*/
   return (
     <View
       style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center" }}
@@ -74,16 +82,20 @@ export default function Cart({ navigation }) {
       onChangeText={(text) => setTextInputValue(text)}
       value={textInputValue}>
       </TextInput>
-      <TouchableOpacity style={styles.infoStyle}>
-        <ImageBackground
-          source={info}
-          style={{ resizeMode: "contain", width: "100%", height: "100%" }}
-        />
-      </TouchableOpacity>
+
+      <View style={styles.infoDisplay}>
+      <Image source={require('./../assets/blue.png')} style={{left: (12 / 414) * windowWidth, top: (6/ 896) * windowHeight,width: (17 / 414) * windowWidth, height: (17 / 896) * windowHeight,}} />
+      <Image source={require('./../assets/red.png')} style={{left: (12 / 414) * windowWidth, top: (20/ 896) * windowHeight,width: (17 / 414) * windowWidth, height: (17 / 896) * windowHeight,}} />
+      <Image source={require('./../assets/green.png')} style={{left: (12 / 414) * windowWidth, top: (34/ 896) * windowHeight,width: (17 / 414) * windowWidth, height: (17 / 896) * windowHeight,}} />
+
+      <Text style={styles.text1}>Payment Pending</Text>
+      <Text style={styles.text2}>Paid and Items not received</Text>
+      <Text style={styles.text3}>Items ready</Text>
 
       <Text style={styles.blueStyle}>{state.blueOrder}</Text>
       <Text style={styles.redStyle}>{state.redOrder}</Text>
       <Text style={styles.greenStyle}>{state.greenOrder}</Text>
+      </View>
 
       <TouchableOpacity
         style={styles.backToCartStyle}
@@ -115,7 +127,7 @@ export default function Cart({ navigation }) {
                 style={{
                   flex: 0.9,
                   width: (414 / 414) * windowWidth,
-                  Height: (1000 / 896) * windowHeight,
+                  Height: (896 / 896) * windowHeight,
                   top: (0 / 896) * windowHeight,
                   marginVertical: 50,
                 }}
@@ -138,7 +150,7 @@ export default function Cart({ navigation }) {
                 style={{
                   flex: 1,
                   width: (414 / 414) * windowWidth,
-                  Height: (1000 / 896) * windowHeight,
+                  Height: (896 / 896) * windowHeight,
                   top: (0 / 896) * windowHeight,
                   marginVertical: 50,
                 }}
@@ -162,7 +174,7 @@ export default function Cart({ navigation }) {
                 style={{
                   flex: 1,
                   width: (414 / 414) * windowWidth,
-                  Height: (1000 / 896) * windowHeight,
+                  Height: (896 / 896) * windowHeight,
                   top: (0 / 896) * windowHeight,
                   marginVertical: 50,
                 }}
@@ -198,6 +210,7 @@ const styles = StyleSheet.create({
     "width": windowWidth,
     "height": windowHeight
   },
+
   background: {
     position: "relative",
     width: 414,
@@ -218,6 +231,47 @@ const styles = StyleSheet.create({
     top: (39 / 896) * windowHeight,
   },
 
+  infoDisplay: {
+    position: "absolute",
+    width: 369/414 * windowWidth,
+    height: 100/896 * windowHeight,
+    left: 22/414 * windowWidth,
+    top: 92/896 * windowHeight,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 0.5,
+    borderColor: "#000000",
+    borderStyle: "solid",
+    borderRadius: 5,
+},
+
+  text1: {
+    position: "absolute",
+    left: (70 / 414) * windowWidth,
+    top: (6 / 896) * windowHeight,
+    fontWeight: "bold",
+    lineHeight: 22,
+    fontSize: 18
+  },
+
+  text2: {
+    position: "absolute",
+    left: (70 / 414) * windowWidth,
+    top: (35 / 896) * windowHeight,
+    fontWeight: "bold",
+    lineHeight: 22,
+    fontSize: 18
+  },
+
+  text3: {
+    position: "absolute",
+    left: (70 / 414) * windowWidth,
+    top: (64 / 896) * windowHeight,
+    fontWeight: "bold",
+    lineHeight: 22,
+    fontSize: 18,
+    display: "flex"
+  },
+
   infoStyle: {
     position: "absolute",
     width: (380 / 414) * windowWidth,
@@ -228,22 +282,25 @@ const styles = StyleSheet.create({
 
   blueStyle: {
     position: "absolute",
-    right: (50 / 414) * windowWidth,
-    top: (98 / 896) * windowHeight,
+    right: (27 / 414) * windowWidth,
+    top: (6 / 896) * windowHeight,
+    lineHeight: 22,
     fontWeight: "bold",
   },
 
   redStyle: {
     position: "absolute",
-    right: (50 / 414) * windowWidth,
-    top: (135 / 896) * windowHeight,
+    right: (27 / 414) * windowWidth,
+    top: (35 / 896) * windowHeight,
+    lineHeight: 22,
     fontWeight: "bold",
   },
 
   greenStyle: {
     position: "absolute",
-    right: (50 / 414) * windowWidth,
-    top: (174 / 896) * windowHeight,
+    right: (27 / 414) * windowWidth,
+    top: (64 / 896) * windowHeight,
+    lineHeight: 22,
     fontWeight: "bold",
   },
 
