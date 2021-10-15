@@ -61,7 +61,7 @@ export default function Cart({ navigation ,route }) {
       sum += item.Price * (QRarray[0])[i].Quant;
       i++
     }
-    if(!flag){return(<Image source={loadingScreen} style={{position: "relative",resizeMode:'contain',"width": windowWidth,"height": windowHeight}} />)}
+    if(!flag){return(<ImageBackground source={loadingScreen} style={{position: "relative",resizeMode:'contain',"width": windowWidth,"height": windowHeight}} />)}
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>

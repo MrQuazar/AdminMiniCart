@@ -66,6 +66,17 @@ export default function Cart({ navigation }) {
 
   console.log(orders);
 
+  const signOutUser = async () => {
+    try{
+        await fire.auth().signOut()
+        navigation.navigate('Login')
+        
+    }catch(e){
+        console.log('logout')
+        console.log(e)
+    }
+}
+
 /*
 
       <TouchableOpacity style={styles.infoStyle}>
