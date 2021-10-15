@@ -4,6 +4,7 @@ import { Text, View, StyleSheet, Image, ImageBackground, TextInput, TouchableOpa
 import toOrders from './../assets/toOrders.png'
 import proceed from './../assets/proceedBtn.png'
 import backy from './../assets/background.png'
+import loadingScreen from './../assets/loadingScreen.png'
 import { Dimensions } from 'react-native';
 
 import fire from './firebase';
@@ -59,7 +60,7 @@ export default function Cart({ navigation ,route }) {
       sum += item.Price * (QRarray[0])[i].Quant;
       i++
     }
-    if(!flag){return(<Text>The page is loading</Text>)}
+    if(!flag){return(<Image source={loadingScreen} style={{position: "relative",resizeMode:'contain',"width": windowWidth,"height": windowHeight}} />)}
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF'}}>
         <ImageBackground source={backy} style={styles.image}>
