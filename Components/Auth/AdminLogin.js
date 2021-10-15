@@ -52,15 +52,6 @@ export default function AdminLogin({ navigation }) {
         }}>
         <Text style={styles.ButtonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.HaveAccTxt}>
-        <Text style={{ fontFamily: "Roboto", fontStyle: "normal", fontWeight: "500", fontSize: 10, lineHeight: 12, color: "rgba(231, 231, 231, 0.81)" }}>
-          Don’t have an account?</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.SignUpText}>
-        <Text style={{ fontFamily: "Roboto", fontStyle: "normal", fontWeight: "500", fontSize: 10, lineHeight: 12, color: "#FFC700" }}
-          onPress={() => navigation.navigate("Admin Register")}>
-          Create One</Text>
-      </TouchableOpacity>
     </View>
   )
 }

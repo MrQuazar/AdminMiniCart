@@ -48,6 +48,9 @@ export default function Cart({ navigation }) {
         if (data) {
           const items = Object.values(data);
           console.log(items);
+          BO = 0
+          RO = 0
+          GO = 0
           for(let i=0; i<items.length; i++) {
           console.log(items[i].Status)
           if (items[i].Status === "B") (BO=BO+1);
