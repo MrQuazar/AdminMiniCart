@@ -16,6 +16,8 @@ import logo from '../../assets/TheIcon.png'
 export default function AdminLogin({ navigation }) {
   const [Email, setEmail] = React.useState();
   const [PWord, setPWord] = React.useState();
+  const emailkeeper = React.createRef();
+  const passwordkeeper = React.createRef();
   if(fire.auth().currentUser){
     console.log(fire.auth().currentUser)
   }
@@ -33,19 +35,20 @@ export default function AdminLogin({ navigation }) {
       <Text style={styles.RegText}>Login</Text>
       <Text style={styles.CreateNewAccTxt}>Enter your Email and Password</Text>
       <TextInput style={styles.InputStyle1} placeholder='Enter Email'
-      onChangeText={Email => setEmail(Email)}></TextInput>
+      onChangeText={Email => setEmail(Email)} ref={emailkeeper} ></TextInput>
       <TextInput style={styles.InputStyle2} placeholder='Enter Password'
-      onChangeText={PWord => setPWord(PWord)} secureTextEntry={true}></TextInput>
+      onChangeText={PWord => setPWord(PWord)} secureTextEntry={true} ref={passwordkeeper}></TextInput>
       <TouchableOpacity style={styles.Button} title='Login' onPress={
         async () => {
           try {
             console.log(PWord);
             await fire.auth().signInWithEmailAndPassword(Email, PWord);
-            console.log(Email);
-            console.log(PWord);
+            emailkeeper.current.clear();
+            passwordkeeper.current.clear();
+            setEmail(" ");
+            setPWord(" ");
             navigation.navigate("adminOrderScreen")
-            
-            
+
           } catch (error) {
             alert('Something Went Wrong');
           }
