@@ -208,8 +208,8 @@ export default function Cart({ navigation }) {
       
     
   );
-}
-
+} 
+ 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
