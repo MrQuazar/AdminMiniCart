@@ -87,10 +87,9 @@ export default function Cart({ navigation }) {
       </TouchableOpacity>
 */
   return (
-    <View
-      style={{ flex: 1, backgroundColor: "#FFFFFF", justifyContent: "center" }}
-    >
+    
          <ImageBackground source={backy} style={styles.image}>
+           <View style = {{flex:1}}>
       <TextInput 
       style={styles.InputStyle1}  
       placeholder='Search here'
@@ -215,8 +214,10 @@ export default function Cart({ navigation }) {
             );
         }})}
       </ScrollView>
+      </View>
       </ImageBackground>
-    </View>
+      
+    
   );
 }
 
