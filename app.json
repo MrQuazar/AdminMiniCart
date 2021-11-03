@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "AdminMiniCart",
+    "name": "Admin MiniCart",
     "slug": "AdminMiniCart",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,6 @@
     "splash": {
       "image": "./assets/AdminSplashScreen.png",
       "resizeMode": "cover"
-      
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,10 +22,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.rcoe.adminminicart"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Mini Cart's Admin version for shopkeepers. Has options to check orders uploaded on the database and give the live status of orders.",
+    "githubUrl": "https://github.com/MrQuazar/AdminMiniCart"
   }
 }
